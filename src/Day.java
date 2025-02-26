@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Day {
     private LocalDate day;
-    private List<Match> matches;
+    private ArrayList<Match> matches;
 
 
     public Day(LocalDate day) {

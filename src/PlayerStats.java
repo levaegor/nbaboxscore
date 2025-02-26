@@ -41,4 +41,5 @@ public class PlayerStats {
     public void setAssists(int assists) {
         this.assists = assists;
     }
+
 }

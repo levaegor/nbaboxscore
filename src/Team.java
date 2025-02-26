@@ -1,9 +1,8 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Team {
     private String name;
-    private List<Player> players;
+    private ArrayList<Player> players;
 
     public Team(String name) {
         this.name = name;
@@ -11,10 +10,14 @@ public class Team {
     }
 
     public void addPlayer(Player player) {
-        players.add(player);
+        getPlayers().add(player);
     }
 
     public String getName() {
         return name;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 }
