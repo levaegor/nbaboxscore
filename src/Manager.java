@@ -16,7 +16,7 @@ public class Manager {
             "Utah Jazz", "Washington Wizards"};
 
     private static List<Team> teams = new ArrayList<Team>();
-    private static List<Day> schedule = new ArrayList<Day>();
+    static List<Day> schedule = new ArrayList<Day>();
 
     public static void initTeams() {
         for (String teamName: teamNames) {
@@ -41,7 +41,7 @@ public class Manager {
     }
 
 
-    public static void initSchedule() {
+    public static ArrayList<Day> initSchedule() {
         LocalDate startDate = LocalDate.of(2025, Month.FEBRUARY, 25); //22.10.2024
         LocalDate today = LocalDate.now();
         ArrayList<Day> schedule = new ArrayList<Day>();
@@ -56,8 +56,8 @@ public class Manager {
                 gameDay.addMatch(match);
                 generateStats(match, shuffledTeams.get(0));
                 generateStats(match, shuffledTeams.get(1));
-                shuffledTeams.removeFirst();
-                shuffledTeams.removeFirst();
+                shuffledTeams.remove(0); //Java 8 :)
+                shuffledTeams.remove(0);
 
 //                for (PlayerStats playerStats: match.playerStats1) {
 //                    System.out.println("\n" + playerStats.getPlayer().getJerseyNumber() + " " + playerStats.getPlayer().getTeam().getName()
@@ -70,11 +70,11 @@ public class Manager {
 //                            + " scored:" + playerStats.getPoints());
 //                }
 //                System.out.println(match.getTeam2().getName() + " scored" + match.stats2.getPoints());
-
-
             }
             schedule.add(gameDay);
         }
+
+        return schedule;
     }
 
     public static void generateStats(Match match, Team team) {
@@ -105,17 +105,25 @@ public class Manager {
             }
         }
         if (match.getTeam1() == team) {
-            match.stats1.setPoints(teamPoints);
-            match.stats1.setRebounds(teamRebounds);
-            match.stats1.setAssists(teamAssists);
+            match.getStats1().setPoints(teamPoints);
+            match.getStats1().setRebounds(teamRebounds);
+            match.getStats1().setAssists(teamAssists);
         } else {
-            match.stats2.setPoints(teamPoints);
-            match.stats2.setRebounds(teamRebounds);
-            match.stats2.setAssists(teamAssists);
+            match.getStats2().setPoints(teamPoints);
+            match.getStats2().setRebounds(teamRebounds);
+            match.getStats2().setAssists(teamAssists);
         }
-
-
-
+        if (match.getStats1().getPoints() > match.getStats2().getPoints()) {
+            match.getStats1().setResult(true);
+        } else if (match.getStats1().getPoints() < match.getStats2().getPoints()) {
+            match.getStats2().setResult(true);
+        } else { // лучший в мире за работой, костыль века
+            int points1 = match.getStats1().getPoints();
+            match.getStats1().setPoints(++points1);
+            int player11 = match.getPlayerStats1().get(0).getPoints();
+            match.getPlayerStats1().get(0).setPoints(++player11);
+            match.getStats1().setResult(true);
+        }
     }
 
     public static List<Team> getTeams() {

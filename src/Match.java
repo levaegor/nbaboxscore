@@ -4,10 +4,10 @@ public class Match {
     private Day day;
     private Team team1;
     private Team team2;
-    public TeamStats stats1;
-    public TeamStats stats2;
-    public ArrayList<PlayerStats> playerStats1;
-    public ArrayList<PlayerStats> playerStats2;
+    private TeamStats stats1;
+    private TeamStats stats2;
+    private ArrayList<PlayerStats> playerStats1;
+    private ArrayList<PlayerStats> playerStats2;
 
     public Match(Day day, Team team1, Team team2) {
         this.day = day;
@@ -40,10 +40,18 @@ public class Match {
     }
 
     public void addPlayerStats1(PlayerStats playerStats) {
-        this.playerStats1.add(playerStats);
+        this.getPlayerStats1().add(playerStats);
     }
 
     public void addPlayerStats2(PlayerStats playerStats) {
-        this.playerStats2.add(playerStats);
+        this.getPlayerStats2().add(playerStats);
+    }
+
+    public ArrayList<PlayerStats> getPlayerStats1() {
+        return playerStats1;
+    }
+
+    public ArrayList<PlayerStats> getPlayerStats2() {
+        return playerStats2;
     }
 }
